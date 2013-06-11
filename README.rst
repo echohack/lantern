@@ -14,7 +14,7 @@ Lantern provides an easy way to integrate with security providers in python.
     xmlns="https://analysiscenter.veracode.com/schema/2.0/filelist"
     xsi:schemaLocation="https://analysiscenter.veracode.com/schema/2.0/filelist
     https://analysiscenter.veracode.com/resource/2.0/filelist.xsd" 
-    account_id="00001" app_id="00001" build_id="98882">
+    account_id="00001" app_id="00001" build_id="00001">
     <file file_id="21271739" file_name="TestFile01.jsp" file_status="Uploaded"/>
     <file file_id="21243504" file_name="TestFile02.jsp" file_status="Uploaded"/>
     <file file_id="21243519" file_name="TestFile03.class" file_status="Uploaded"/>

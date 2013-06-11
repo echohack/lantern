@@ -7,7 +7,9 @@ import fnmatch
 import os
 import time
 import xml.etree.ElementTree as ET
+import ssl
 import requests
+from adapters import SSLAdapter
 
 
 class ReceivedErrorXML(TypeError):
@@ -43,6 +45,14 @@ class AbstractAPI():
         Return the xml result returned by a GET or POST call where one or more parameters can be a file.
         """
         url = "{}{}".format(self.base_url, api)
+
+        """
+        Mount a new SSLAdapter to the session
+        because otherwise Python on Windows will fail.
+        """
+        s = requests.Session()
+        s.mount('https://', SSLAdapter(ssl_version=ssl.PROTOCOL_TLSv1))
+
         r = requests.request(request_type, url, params=params, data=data, files=files, auth=self.get_credentials())
 
         if is_binary:

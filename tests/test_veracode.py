@@ -593,14 +593,14 @@ class TestAPI():
                 create_build.return_value = mock_build_info_xml_create_build
                 self.test_instance.set_build_id("TestCreateBuild")
                 result = self.test_instance.build_id
-                assert result == "98112"
+                assert result == "00002"
 
     def test_use_existing_build(self):
         with patch("lantern.AbstractAPI.get_build_list") as get_build_list:
             get_build_list.return_value = mock_build_list_xml
             self.test_instance.set_build_id("TestCreateBuild")
             result = self.test_instance.build_id
-            assert result == "98112"
+            assert result == "00002"
 
     def test_delete_build(self):
         with patch("lantern.AbstractAPI.delete_build") as delete_build:
