@@ -53,7 +53,7 @@ class AbstractAPI():
         s = requests.Session()
         s.mount('https://', SSLAdapter(ssl_version=ssl.PROTOCOL_TLSv1))
 
-        r = requests.request(request_type, url, params=params, data=data, files=files, auth=self.get_credentials())
+        r = s.request(request_type, url, params=params, data=data, files=files, auth=self.get_credentials())
 
         if is_binary:
             return r.content
