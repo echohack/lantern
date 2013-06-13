@@ -1,7 +1,3 @@
-"""
-Compatable with Veracode API Version: 4.0
-"""
-
 import glob
 import fnmatch
 import os

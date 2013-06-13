@@ -50,7 +50,7 @@ Documentation will expand to a Sphinx project soon™.
 
 Compatibility
 --------------
-- Python 3.2.
+- Python 3.
 - Tests: nose
 - Veracode: 4.0 API
 
