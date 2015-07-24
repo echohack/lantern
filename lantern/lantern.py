@@ -380,7 +380,7 @@ class API(AbstractAPI):
             return AbstractAPI.begin_scan(self, self.app_id, modules, False)
 
     def get_prescan_results(self, tries=1, initial_delay=0, delay=1, backoff=2):
-        success_list = ['Pre-Scan Success', 'Results Ready', 'Scan Internal Error']
+        success_list = ['Pre-Scan Success', 'Results Ready', 'Scan Internal Error', 'Scan In Progress']
         return self.poll_api(tries, initial_delay, delay, backoff, success_list, AbstractAPI.get_prescan_results, self, self.app_id, self.build_id)
 
     def remove_file_by_name(self, filename):
