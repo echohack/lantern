@@ -16,19 +16,21 @@ build_name = os.environ['BUILD_NUMBER']
 local_scan_delay = 60
 
 global_black_list = [
-    '*.[Ii]nstall*', '*.*manifest*', '*.sql*', '*Test*.*', '*.chm', '*.config*', '*.cs', '*.dacpac', '*.dbschema',
-    '*.deployment', '*.dgml', '*.DS_Store', '*.fakesconfig', '*.fs', '*.ini', '*.lastcodeanalysissucceeded', '*.mht',
-    '*.ndoc', '*.resx', '*.sh', '*.sqp', '*.targets', '*.txt', '*.vsto', '*.xml', '*.xlsx', '*.xsd', 'Antlr*',
-    'AxInterop.*', 'C1.*', 'Castle.Core.*', 'com.contoso.*', 'com.google.*', 'com.sshtool.*', 'CommonBE.*',
-    'CrystalDecisions.*', 'CuteEditor.*', 'DevExpress.*', 'DocumentFormat.*', 'FluentNHibernate.*', 'kodo.*',
-    'Infragistics2.*', 'Interop.*', 'Ionic.Zip.*', 'log4net.*', 'Mabry.*', '[Mm]icrosoft.*', '*.Moles.dll',
-    'net.sf.jmimemagic.*', 'org.apache.*', 'org.drools.*', 'org.jboss.*', 'org.springframework.*', 'PolicyBE.*',
-    'StructureMap.*', '[Ss]ystem.*', 'Telerik*', 'WSAPI*.dll', 'Abyss.dll', 'AjaxControlToolkit.dll',
-    'AuthenticationInterfaces.dll', 'BackgroundCopyManager.dll', 'bii.exe', 'Coalesys.WebMenu.dll',
-    'EntityFramework.dll', 'ICSharpCode.SharpZipLib.dll', 'IRQuery.dll', 'jscoverage.exe', 'LightLogger.dll',
-    'Moq.dll', 'NetSpell.SpellChecker.dll', 'nunit.*', 'Office.dll', 'ojdbc6-*.jar', 'ONSMessages.dll',
-    'PublicDomain.dll', 'QASupport.dll', 'Rhino.Mocks.dll', 'RouteDebug.dll', 'SEAREACH4.DLL', 'ServiceStack.Text.dll',
-    'SourceSafeTypeLib.dll', 'SqlPackage.exe', 'stdole.dll', 'TallComponents.PDF.Layout.dll',
+    '*.[Ii]nstall*', '*.*manifest*', '*.sql*', '*Test*.*', '*.asax', '*.asmx', '*.aspx', '*.browser', '*.chm',
+    '*.[Cc]onfig*', '*.cs', '*.css', '*.cmd', '*.cshtml', '*.dacpac', '*.dbschema', '*.deployment', '*.dgml',
+    '*.DS_Store', '*.eot', '*.fakesconfig', '*.fs', '*.gif', '*.htm*', '*.ico', '*.ini', '*.js', '*.json',
+    '*.lastcodeanalysissucceeded', '*.less', '*.MARKDOWN', '*.map', '*.md', '*.mht', '*.ndoc', '*.nupkg', '*.nuspec',
+    '*.otf', '*.pfx', '*.png', '*.ps1', '*.resx', '*.sitemap', '*.sh', '*.sqp', '*.svc', '*.svg', '*.targets', '*.ttf',
+    '*.txt', '*.vsto', '*.xml', '*.xlsx', '*.xsd', '*.xsl', '*.woff', 'Antlr*','AxInterop.*', 'C1.*', 'Castle.Core.*',
+    'com.contoso.*', 'com.google.*', 'com.sshtool.*', 'CommonBE.*', 'CrystalDecisions.*', 'CuteEditor.*',
+    'DevExpress.*', 'DocumentFormat.*', 'FluentNHibernate.*', 'kodo.*', 'Infragistics2.*', 'Interop.*', 'Ionic.Zip.*',
+    'log4net.*', 'Mabry.*', '[Mm]icrosoft.*', '*.Moles.dll', 'net.sf.jmimemagic.*', 'org.apache.*', 'org.drools.*',
+    'org.jboss.*', 'org.springframework.*', 'PolicyBE.*', 'StructureMap.*', '[Ss]ystem.*', 'Telerik*', 'WSAPI*.dll',
+    'Abyss.dll', 'AjaxControlToolkit.dll', 'AuthenticationInterfaces.dll', 'BackgroundCopyManager.dll', 'bii.exe',
+    'Coalesys.WebMenu.dll', 'EntityFramework.dll', 'ICSharpCode.SharpZipLib.dll', 'IRQuery.dll', 'jscoverage.exe',
+    'LightLogger.dll', 'Moq.dll', 'NetSpell.SpellChecker.dll', 'nunit.*', 'Office.dll', 'ojdbc6-*.jar',
+    'ONSMessages.dll', 'PublicDomain.dll', 'QASupport.dll', 'Rhino.Mocks.dll', 'RouteDebug.dll', 'SEAREACH4.DLL',
+    'ServiceStack.Text.dll', 'SourceSafeTypeLib.dll', 'SqlPackage.exe', 'stdole.dll', 'TallComponents.PDF.Layout.dll',
     'WebDriver.dll', 'weblogic.*', 'Xceed*', 'XPCommonControls.dll']
 
 v = lantern.API(username, password, app_name, build_name)

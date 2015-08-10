@@ -272,10 +272,14 @@ class API(AbstractAPI):
             return list()
         else:
             black_list = list()
-            for pattern in black_list_patterns:
-                glob_list = glob.glob(directory + pattern)
-                for item in glob_list:
-                    black_list.append(os.path.basename(item))
+            for root, subdir_list, files in os.walk(directory):
+                for subdir in subdir_list:
+                    subdir_path = os.path.join(root, subdir)
+                    for pattern in black_list_patterns:
+                        subdir_glob = '{}/{}'.format(subdir_path, pattern)
+                        glob_list = glob.glob(subdir_glob)
+                        for filename in glob_list:
+                            black_list.append(os.path.basename(filename))
             return black_list
 
     def create_module_white_list(self, module_list, black_list_patterns):
@@ -293,13 +297,20 @@ class API(AbstractAPI):
                     modules.remove(item)
             return modules
 
-    def compare_file_list(self, directory, black_list_patterns=None):
-        master_file_list = self.get_master_file_list(directory)
+    def compare_file_data(self, directory, black_list_patterns=None):
+        master_filedata_list = self.get_master_filedata_list(directory)
         black_list = self.create_black_list(directory, black_list_patterns)
-        white_list = list(set(master_file_list) - set(black_list))
+        white_list = list()
+        for filedata in master_filedata_list:
+            if filedata['filename'] not in black_list:
+                white_list.append(filedata)
         veracode_file_list_xml = self.get_file_list(self.app_id, self.build_id)
         veracode_file_list = self.get_list_from_xml_attrib(veracode_file_list_xml, 'file_name')
-        return list(set(white_list) ^ set(veracode_file_list))
+        compared_data = list()
+        for filedata in white_list:
+            if filedata['filename'] not in veracode_file_list:
+                compared_data.append(filedata)
+        return compared_data
 
     def compare_module_list(self, prescan_results_xml, black_list_patterns=None):
         veracode_module_list = self.get_module_list(prescan_results_xml)
@@ -318,15 +329,13 @@ class API(AbstractAPI):
         root = ET.fromstring(xml)
         return [child.get(attrib) for child in root]
 
-    def get_master_file_list(self, directory):
-        file_list = os.listdir(directory)
-        master_file_list = list()
-        for item in file_list:
-            local_file = directory + '/' + item
-            isfile = os.path.isfile(local_file)
-            if isfile:
-                master_file_list.append(item)
-        return master_file_list
+    def get_master_filedata_list(self, directory):
+        master_list = list()
+        for root, subdir, files in os.walk(directory):
+            for filename in files:
+                file_path = os.path.join(root, filename)
+                master_list.append({'filename': filename, 'file_path': file_path})
+        return master_list
 
     def get_module_list(self, prescan_results_xml):
         module_list = list()
@@ -360,7 +369,7 @@ class API(AbstractAPI):
                 polling_time = time.strftime('%a, %d %b %Y %H:%M:%S', time.localtime())
                 print('{0}. Sleeping for {1} seconds.'.format(polling_time, mdelay))
                 time.sleep(mdelay)
-                mdelay *= backoff
+                mdelay += backoff
             else:
                 return apifunction(*args)
         raise ExceededRetries('Failed to poll {0} within {1} tries.'.format(apifunction, tries))
@@ -416,15 +425,19 @@ class API(AbstractAPI):
                 raise ExceededRetries('Failed to call {0} within {1} retries.'.format(function, number_retries))
 
     def upload_file(self, binaries_dir, black_list_patterns=None):
-        files = self.compare_file_list(binaries_dir, black_list_patterns)
+        compared_data = self.compare_file_data(binaries_dir, black_list_patterns)
+        files = list()
+        for filedata in compared_data:
+            files.append(filedata['filename'])
         if not files:
             print('No files to upload. Returning filelist xml.')
             return self.get_file_list(self.app_id, self.build_id)
         file_list_xml = None
         print('Uploading {0} files. Files: {1}'.format(len(files), files))
-        for item in files:
-            local_file = binaries_dir + '/' + item
-            file_list_xml = AbstractAPI.upload_file(self, self.app_id, local_file)
+        for filedata in compared_data:
+            polling_time = time.strftime('%a, %d %b %Y %H:%M:%S', time.localtime())
+            print('{} - {}'.format(polling_time, filedata))
+            file_list_xml = AbstractAPI.upload_file(self, self.app_id, filedata['file_path'])
         return file_list_xml
 
     def upload_file_retry(self, binaries_dir, black_list_patterns=None, number_retries=10):
@@ -439,8 +452,8 @@ class API(AbstractAPI):
         from populating correctly on Veracode's side.
         '''
         file_list_xml = self.retry(number_retries, self.upload_file, binaries_dir, black_list_patterns)
-        compared_list = self.compare_file_list(binaries_dir, black_list_patterns)
-        print(file_list_xml, compared_list)
+        compared_list = self.compare_file_data(binaries_dir, black_list_patterns)
+        print('File List: {} \nCompared List: {}'.format(file_list_xml, compared_list))
         if compared_list != []:
             self.retry(number_retries, self.upload_file_retry, binaries_dir, black_list_patterns, number_retries - 1)
         else:

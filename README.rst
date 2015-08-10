@@ -1,9 +1,7 @@
 Lantern
 ===============
 
-Lantern is an Apache2 Licensed security scan automation library, written in Python.
-
-Lantern provides an easy way to integrate with security providers in python.
+Lantern is an Apache2 Licensed security scan automation library for Veracode, written in Python.
 
 .. code-block:: pycon
 
@@ -13,7 +11,7 @@ Lantern provides an easy way to integrate with security providers in python.
     <filelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://analysiscenter.veracode.com/schema/2.0/filelist"
     xsi:schemaLocation="https://analysiscenter.veracode.com/schema/2.0/filelist
-    https://analysiscenter.veracode.com/resource/2.0/filelist.xsd" 
+    https://analysiscenter.veracode.com/resource/2.0/filelist.xsd"
     account_id="00001" app_id="00001" build_id="00001">
     <file file_id="21271739" file_name="TestFile01.jsp" file_status="Uploaded"/>
     <file file_id="21243504" file_name="TestFile02.jsp" file_status="Uploaded"/>
@@ -30,23 +28,10 @@ Lantern provides an easy way to integrate with security providers in python.
 Features
 --------
 
-- Lantern is under heavy development. Many things will change. Beware.
 - API Polling with exponential backoff
 - Optionally create a blacklist (for ignoring third party binaries or test binaries)
 - Integration with Veracode
 
-
-Installation
-------------
-
-None yet! Build from source, or wait until I build installation infrastructure. :)
-
-
-Documentation
--------------
-
-You're reading it!
-Documentation will expand to a Sphinx project soon™.
 
 Compatibility
 --------------
