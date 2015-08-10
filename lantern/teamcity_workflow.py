@@ -38,5 +38,5 @@ v.upload_file_retry(binaries_dir, global_black_list)
 v.begin_prescan(v.app_id, v.build_id, auto_scan=True)
 prescan_results_filename = "{0}-PrescanResults-{1}.xml".format(app_name, build_name)
 # try getting the prescan results. Poll the Veracode service with an exponential backoff until we get results or until it fails.
-prescan_results_xml = v.get_prescan_results(10, 0, 60, 2)  # max wait time = 34.1 hours + local_scan_delay
+prescan_results_xml = v.get_prescan_results(10000, 0, 60, 2)
 write_text_results(prescan_results_xml, prescan_results_filename)

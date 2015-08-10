@@ -76,7 +76,7 @@ summary_report_pdf_name = "{0}-SummaryReportPDF-{1}.pdf".format(app_name, build_
 try getting the scan results. Poll the Veracode service with an exponential backoff until we get results or until it fails.
 Note that only the first result needs to wait, since the rest of the results should be available when the first one is ready.
 """
-write_text_results(v.detailed_report(14, local_scan_delay, 60, 2), detailed_report_xml_name)  # max wait time ~ 11.3 days + local_scan_delay
+write_text_results(v.detailed_report(10000, local_scan_delay, 60, 2), detailed_report_xml_name)
 write_text_results(v.summary_report(), summary_report_xml_name)
 write_binary_results(v.detailed_report_pdf(), detailed_report_pdf_name)
 write_binary_results(v.summary_report_pdf(), summary_report_pdf_name)
