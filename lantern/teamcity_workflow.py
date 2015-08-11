@@ -11,7 +11,7 @@ def write_text_results(data, outfilename, encoding="utf-8"):
 username = os.environ['veracode_user']
 password = os.environ['veracode_password']
 app_name =  os.environ['veracode_app_name']
-binaries_dir = os.environ['workspace']+ '/output/static_security_build'
+binaries_dir = os.environ['workspace']+ '/output'
 build_name = os.environ['BUILD_NUMBER']
 local_scan_delay = 60
 
