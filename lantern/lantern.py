@@ -44,7 +44,7 @@ class AbstractAPI():
 
         # Mount a new SSLAdapter to the session because otherwise Python on Windows will fail.
         s = requests.Session()
-        s.mount('https://', SSLAdapter(ssl_version=ssl.PROTOCOL_TLSv1))
+        s.mount('https://', SSLAdapter(ssl_version=ssl.PROTOCOL_TLSv1_2))
 
         r = s.request(request_type, url, params=params, data=data, files=files, auth=self.get_credentials())
 
